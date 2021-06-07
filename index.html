@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style/main.css" />
+    <title>Clock</title>
+  </head>
+  <body>
+    <div id="clock">
+      <div id="hour"></div>
+      <div id="min"></div>
+      <div id="sec"></div>
+    </div>
+
+    <script>
+      setInterval(() => {
+        const getHours = new Date().getHours();
+        const getMinutes = new Date().getMinutes();
+        const getSeconds = new Date().getSeconds();
+
+        const calDegrees = (condition) => {
+          let degrees = 0;
+          switch (condition) {
+            case 'hours':
+              degrees = getHours * 30 + getMinutes / 2;
+              break;
+            case 'minutes':
+              degrees = getMinutes * 6;
+              break;
+            case 'seconds':
+              degrees = getSeconds * 6;
+              break;
+          }
+
+          return `rotate(${degrees}deg)`;
+        };
+
+        const hours = (document.querySelector('#hour').style.transform =
+          calDegrees('hours'));
+
+        const minutes = (document.querySelector('#min').style.transform =
+          calDegrees('minutes'));
+
+        const seconds = (document.querySelector('#sec').style.transform =
+          calDegrees('seconds'));
+      }, 1000);
+    </script>
+  </body>
+</html>
