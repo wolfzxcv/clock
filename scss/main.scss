@@ -31,3 +31,49 @@
   background: url('../images/hourhand.png');
   z-index: 1;
 }
+
+/* The animation code */
+@keyframes loop {
+  0% {
+    background-color: red;
+    left: 0px;
+    top: 0px;
+  }
+  30% {
+    background-color: orange;
+    left: calc(100% - var(--square));
+    top: 0px;
+  }
+  50% {
+    background-color: yellow;
+    left: calc(100% - var(--square));
+    top: calc(98vh - var(--square));
+  }
+  80% {
+    background-color: yellowgreen;
+    left: 0px;
+    top: calc(98vh - var(--square));
+  }
+  100% {
+    background-color: red;
+    left: 0px;
+    top: 0px;
+  }
+}
+
+$square: 50px;
+/* The element to apply the animation to */
+div.block {
+  border: 1px solid black;
+  width: $square;
+  height: $square;
+  border-radius: 50%;
+  position: relative;
+  background-color: red;
+  animation-name: loop;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+  --square: 50px;
+}
