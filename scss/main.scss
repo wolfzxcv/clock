@@ -1,3 +1,15 @@
+:root {
+  --second: 1s;
+  --minute: calc(var(--second) * 60);
+  --hour: calc(var(--minute) * 60);
+  // --setTimeHour: 16;
+  // --setTimeMinute: 59;
+  // --setTimeSecond: 16;
+  --timeShiftHour: calc(var(--setTimeHour) * var(--hour));
+  --timeShiftMinute: calc(var(--setTimeMinute) * var(--minute));
+  --timeShiftSecond: calc(var(--setTimeSecond) * var(--second));
+}
+
 #clock {
   position: relative;
   width: 600px;
@@ -7,9 +19,9 @@
   list-style: none;
 }
 
-#sec,
+#hour,
 #min,
-#hour {
+#sec {
   position: absolute;
   width: 30px;
   height: 600px;
@@ -17,19 +29,51 @@
   left: 285px;
 }
 
-#sec {
-  background: url('../images/sechand.png');
-  z-index: 3;
+#hour {
+  background: url('../images/hourhand.png');
+  z-index: 1;
+  animation: rotate linear calc(var(--hour) * 12) infinite;
+  animation-delay: calc((var(--timeShiftHour) + var(--timeShiftMinute)) * -1);
 }
 
 #min {
   background: url('../images/minhand.png');
   z-index: 2;
+  animation: rotate linear var(--hour) infinite;
+  animation-delay: calc(var(--timeShiftMinute) * -1);
 }
 
-#hour {
-  background: url('../images/hourhand.png');
-  z-index: 1;
+#sec {
+  background: url('../images/sechand.png');
+  z-index: 3;
+  animation: rotate steps(60) var(--minute) infinite;
+  animation-delay: calc(var(--timeShiftSecond) * -1);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+$square: 50px;
+/* The element to apply the animation to */
+div.block {
+  border: 1px solid black;
+  width: $square;
+  height: $square;
+  border-radius: 50%;
+  position: relative;
+  background-color: red;
+  animation-name: loop;
+  animation-duration: 12s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  --square: 50px;
 }
 
 /* The animation code */
@@ -59,21 +103,4 @@
     left: 0px;
     top: 0px;
   }
-}
-
-$square: 50px;
-/* The element to apply the animation to */
-div.block {
-  border: 1px solid black;
-  width: $square;
-  height: $square;
-  border-radius: 50%;
-  position: relative;
-  background-color: red;
-  animation-name: loop;
-  animation-duration: 12s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  animation-timing-function: ease-in-out;
-  --square: 50px;
 }

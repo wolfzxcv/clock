@@ -1,15 +1,24 @@
+:root {
+  --second: 1s;
+  --minute: calc(var(--second) * 60);
+  --hour: calc(var(--minute) * 60);
+  --timeShiftHour: calc(var(--setTimeHour) * var(--hour));
+  --timeShiftMinute: calc(var(--setTimeMinute) * var(--minute));
+  --timeShiftSecond: calc(var(--setTimeSecond) * var(--second));
+}
+
 #clock {
   position: relative;
   width: 600px;
   height: 600px;
   margin: 20px auto 0 auto;
-  background: url("../images/clockface.jpg");
+  background: url('../images/clockface.jpg');
   list-style: none;
 }
 
-#sec,
+#hour,
 #min,
-#hour {
+#sec {
   position: absolute;
   width: 30px;
   height: 600px;
@@ -17,19 +26,76 @@
   left: 285px;
 }
 
-#sec {
-  background: url("../images/sechand.png");
-  z-index: 3;
+#hour {
+  background: url('../images/hourhand.png');
+  z-index: 1;
+  -webkit-animation: rotate linear calc(var(--hour) * 12) infinite;
+  animation: rotate linear calc(var(--hour) * 12) infinite;
+  -webkit-animation-delay: calc(
+    (var(--timeShiftHour) + var(--timeShiftMinute)) * -1
+  );
+  animation-delay: calc((var(--timeShiftHour) + var(--timeShiftMinute)) * -1);
 }
 
 #min {
-  background: url("../images/minhand.png");
+  background: url('../images/minhand.png');
   z-index: 2;
+  -webkit-animation: rotate linear var(--hour) infinite;
+  animation: rotate linear var(--hour) infinite;
+  -webkit-animation-delay: calc(var(--timeShiftMinute) * -1);
+  animation-delay: calc(var(--timeShiftMinute) * -1);
 }
 
-#hour {
-  background: url("../images/hourhand.png");
-  z-index: 1;
+#sec {
+  background: url('../images/sechand.png');
+  z-index: 3;
+  -webkit-animation: rotate steps(60) var(--minute) infinite;
+  animation: rotate steps(60) var(--minute) infinite;
+  -webkit-animation-delay: calc(var(--timeShiftSecond) * -1);
+  animation-delay: calc(var(--timeShiftSecond) * -1);
+}
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes rotate {
+  from {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  to {
+    -webkit-transform: rotate(1turn);
+    transform: rotate(1turn);
+  }
+}
+
+/* The element to apply the animation to */
+div.block {
+  border: 1px solid black;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  position: relative;
+  background-color: red;
+  -webkit-animation-name: loop;
+  animation-name: loop;
+  -webkit-animation-duration: 12s;
+  animation-duration: 12s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
+  --square: 50px;
 }
 
 /* The animation code */
@@ -87,25 +153,3 @@
     top: 0px;
   }
 }
-
-/* The element to apply the animation to */
-div.block {
-  border: 1px solid black;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  position: relative;
-  background-color: red;
-  -webkit-animation-name: loop;
-          animation-name: loop;
-  -webkit-animation-duration: 12s;
-          animation-duration: 12s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-  -webkit-animation-direction: alternate;
-          animation-direction: alternate;
-  -webkit-animation-timing-function: ease-in-out;
-          animation-timing-function: ease-in-out;
-  --square: 50px;
-}
-/*# sourceMappingURL=main.css.map */
